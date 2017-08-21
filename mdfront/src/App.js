@@ -9,7 +9,17 @@ import Reaction from './components/Reactions'
 import User from './components/Users'
 
 
+
 class App extends Component {
+
+  // componentWillMount(){
+  //   fetch('http://localhost:3000/api/v1/users')
+  //   .then(resp => resp.json())
+  //   .then(resp => {debugger})
+  // }
+
+
+
   render() {
     return (
       <div className="App">

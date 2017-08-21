@@ -1,12 +1,50 @@
 import React from 'react';
 import ReactionForm from './ReactionForm'
+import ReactionDetails from './ReactionDetail'
+
+const URL = 'http://localhost:3000/api/v1'
 
 class Reaction extends React.Component {
   constructor(){
     super()
     this.state = {
-      reactions: []
+      allReactions: [],
+      showFrom: true,
+      singleReaction: [],
+      article_id: 1,
+      showSingleReaction: false
     }
+  }
+
+  componentWillMount(){
+    // debugger
+    fetch(`${URL}/article/reactions/${this.state.article_id}`)
+    .then(resp => resp.json())
+    .then(resp => {this.setState({
+      allReactions: [resp]
+    })})
+  }
+
+  showReactionForm = () => {
+    this.setState({
+      showFrom: true
+    })
+  }
+
+  showSingleReaction = (id) => {
+    let singleAFReaction = this.state.allReactions[0].reactions.find(reaction =>{
+      return reaction.id == id.target.id
+    })
+    this.setState({
+      singleReaction: singleAFReaction,
+      showSingleReaction: true
+    })
+  }
+
+  showAllReactions = () => {
+    this.setState({
+      showSingleReaction: false
+    })
   }
 
   handleFormSubmit = (event) => {
@@ -35,14 +73,27 @@ class Reaction extends React.Component {
       body: data
     })
     .then(resp => resp.json())
-    .then(resp => {debugger})
+    .then(resp => {this.setState({
+      showFrom: false,
+      singleReaction: resp,
+      allReactions: [...this.state.allReactions, resp]
+    })})
   }
 
+
+
   render(){
+    console.log(this.state)
     return (
       <div>
-      <ReactionForm onSubmit={this.handleFormSubmit}/>
         <h1>I am a Reaction</h1>
+        {
+          (this.state.showFrom) ? <ReactionForm onSubmit={this.handleFormSubmit} />
+          : <button onClick={this.showReactionForm} >
+          Add Add Reaction
+          </button>
+        }
+        <ReactionDetails Reactions={(this.state.showSingleReaction) ? this.state.singleReaction: this.state.allReactions} showSingleReaction={this.showSingleReaction} showAllReactions={this.showAllReactions} />
       </div>
     )
   }

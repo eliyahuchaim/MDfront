@@ -35,22 +35,21 @@ class Article extends React.Component {
   }
 
   sendArticlesToBackend = (articles) => {
-    articles.forEach((article) => {
-      data = JSON.stringify(article)
-      fetch(`http://localhost:3000/api/v1/articles`, {
-        headers: {
-        'Authorization': "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.F78CECWXR11i61vE8J6mrE3pSdGjTaRySi7onU00QpQ",
-        'accept': 'application/json',
-        'content-Type': 'application/json'
-         },
-        method: 'POST',
-        body: data
-      })
-      .then(resp => resp.json())
-      .then(resp => this.setState({
-        articlesFromBackEnd: [...this.state.articlesFromBackEnd, resp]
-      }))
+    let data = JSON.stringify({articles: articles})
+    debugger
+    fetch(`http://localhost:3000/api/v1/articles`, {
+      headers: {
+      'Authorization': "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.F78CECWXR11i61vE8J6mrE3pSdGjTaRySi7onU00QpQ",
+      'accept': 'application/json',
+      'content-Type': 'application/json'
+       },
+      method: 'POST',
+      body: data
     })
+    .then(resp => resp.json())
+    .then(resp => this.setState({
+      articlesFromBackEnd: [...this.state.articlesFromBackEnd, ...resp]
+    },()=>{console.log(resp)}))
   }
 
   render(){

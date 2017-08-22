@@ -69,7 +69,9 @@ class App extends Component {
       <div className="App">
         <Router>
           <div>
-            <Navbar loginStatus={this.state.loggedIn} />
+            <div>
+              <Navbar loginStatus={this.state.loggedIn} />
+            </div>
             <Route exact path='/' render={Everything} />
             <Route exact path='/login' render={(props)=>(<Login loginUser={this.loginUser} route={props} />)} />
             <Route exact path='/logout' render={this.logoutUser} />

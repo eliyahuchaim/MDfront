@@ -63,7 +63,10 @@ class Article extends React.Component {
     })
   }
 
-
+  //this should then take us to another component...ArticleDetails, with a prop of articleId.
+  renderArticleDetail = (e) => {
+    console.log(e.target.getAttribute('value'))
+  }
 
   render(){
     let articles;
@@ -80,14 +83,14 @@ class Article extends React.Component {
             </Card.Description>
             <Card.Meta>
               <span className='date' style={{float:'right'}}>
-                <a href={ article.url } target="_blank">Head to Article!</a>
+                <a href={ article.url } target="_blank">Read the Article!</a>
               </span>
             </Card.Meta>
           </Card.Content>
           <Card.Content extra>
-            <a>
+            <a onClick={ this.renderArticleDetail } value={ article.id }>
               <Icon name='user' />
-              See Reactions
+              Head to the Discussion!
             </a>
           </Card.Content>
         </Card>

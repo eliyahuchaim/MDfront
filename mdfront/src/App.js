@@ -19,7 +19,6 @@ const Everything = (props) => {
       <Article />
       <Card />
       <Post />
-      <Reaction />
       <User />
     </div>
   );

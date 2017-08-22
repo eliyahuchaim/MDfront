@@ -21,6 +21,9 @@ return (
           </span>
         </Card.Meta>
       </Card.Content>
+      <button onClick={props.goBack}>
+      Go Back
+      </button>
     </Card>
     < Reactions article_id={props.article.id}/>
   </div>

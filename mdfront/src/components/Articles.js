@@ -49,7 +49,6 @@ class Article extends React.Component {
   // send them to the back end and bring them back to update state.
   sendArticlesToBackend = (articles) => {
     let data = JSON.stringify({articles: articles})
-    debugger
     fetch(`http://localhost:3000/api/v1/articles`, {
       headers: {
       'Authorization': "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.F78CECWXR11i61vE8J6mrE3pSdGjTaRySi7onU00QpQ",
@@ -62,7 +61,7 @@ class Article extends React.Component {
     .then(resp => resp.json())
     .then(resp => this.setState({
       articlesFromBackEnd: [...this.state.articlesFromBackEnd, ...resp]
-    },()=>{console.log(resp)}))
+    }}))
   }
 
   //this should then take us to another component...ArticleDetails, with a prop of articleId.

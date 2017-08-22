@@ -11,22 +11,31 @@ const link = {
 }
 
 const Navbar = (props) => {
+  const onClickHandler = () => {
+    debugger
+    console.log("clicked")
+  }
+
   const loginStatusNav = () => {
     if (props.loginStatus) {
       return (
         <div className='nav-in'>
           <NavLink
+            onClick={onClickHandler()}
             to='/'
             exact
             style={link}
             activeStyle={{
               background: 'darkblue'
             }}
-          >Home</NavLink>
+          >Everything</NavLink>
           <NavLink
             to='/logout'
             exact
             style={link}
+            activeStyle={{
+              background: 'darkblue'
+            }}
           >Logout</NavLink>
         </div>
       )
@@ -41,7 +50,7 @@ const Navbar = (props) => {
             activeStyle={{
               background: 'darkblue'
             }}
-          >Home</NavLink>
+          >Everything</NavLink>
           <NavLink
             to='/login'
             exact
@@ -54,6 +63,9 @@ const Navbar = (props) => {
             to='/signup'
             exact
             style={link}
+            activeStyle={{
+              background: 'darkblue'
+            }}
           >SignUp</NavLink>
         </div>
       )

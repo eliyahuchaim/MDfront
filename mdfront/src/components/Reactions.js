@@ -21,7 +21,7 @@ class Reaction extends React.Component {
     fetch(`${URL}/article/reactions/${this.state.article_id}`)
     .then(resp => resp.json())
     .then(resp => {this.setState({
-      allReactions: [resp]
+      allReactions: resp
     })})
   }
 
@@ -32,13 +32,34 @@ class Reaction extends React.Component {
   }
 
   showSingleReaction = (id) => {
-    let singleAFReaction = this.state.allReactions[0].reactions.find(reaction =>{
+    let singleAFReaction = this.state.allReactions.reactions.find(reaction =>{
       return reaction.id == id.target.id
     })
-    this.setState({
+    this.updateReactionViews(id, singleAFReaction)
+  }
+
+
+  updateReactionViews = (id, singleAFReaction) => {
+    var data = { "reaction": {
+      "initial_score": "true"
+      }
+    }
+    const ID = parseInt(id.target.id)
+    var payload = JSON.stringify(data)
+    fetch(`${URL}/reactions/${ID}`, {
+      headers: {
+      'accept': 'application/json',
+      'content-Type': 'application/json'
+       },
+      body: payload,
+      method: 'PATCH'
+    })
+    .then(resp => resp.json())
+    .then(resp => { console.log(resp)
+      this.setState({
       singleReaction: singleAFReaction,
       showSingleReaction: true
-    })
+    })})
   }
 
   showAllReactions = () => {
@@ -73,17 +94,19 @@ class Reaction extends React.Component {
       body: data
     })
     .then(resp => resp.json())
-    .then(resp => {this.setState({
+    .then(resp => {
+      let reactions = this.state.allReactions
+      reactions.reactions.push(resp)
+      this.setState({
       showFrom: false,
       singleReaction: resp,
-      allReactions: [...this.state.allReactions, resp]
+      allReactions: reactions
     })})
   }
 
 
 
   render(){
-    console.log(this.state)
     return (
       <div>
         <h1>I am a Reaction</h1>

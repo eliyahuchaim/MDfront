@@ -1,14 +1,9 @@
 import React from 'react';
 import { Button, Card, Image } from 'semantic-ui-react'
 
-
-
 const ReactionDetails = (props) => {
 
-
-
   let reactions = reactionJSX(props.Reactions, props)
-
 
   return (
     <div>
@@ -20,8 +15,8 @@ const ReactionDetails = (props) => {
 }
 
 function reactionJSX(reactions, props){
-  if (reactions[0]) {
-    return reactions[0].reactions.map(reaction => {
+  if (reactions.reactions) {
+    return reactions.reactions.map(reaction => {
       return (
       <Card>
         <Card.Content>
@@ -77,17 +72,6 @@ function reactionJSX(reactions, props){
     return null
   }
 }
-
-
-// function show_takeaway(reaction){
-//   debugger
-//   // props.showSingleReaction(reaction.target.id)
-// }
-
-
-
-
-
 
 
 export default ReactionDetails;

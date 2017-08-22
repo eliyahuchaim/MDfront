@@ -10,7 +10,7 @@ class Reaction extends React.Component {
     super(props)
     this.state = {
       allReactions: [],
-      showFrom: true,
+      showFrom: false,
       singleReaction: [],
       article_id: this.props.article_id,
       showSingleReaction: false
@@ -71,7 +71,7 @@ class Reaction extends React.Component {
 
   handleFormSubmit = (event) => {
     event.preventDefault()
-
+    
     let payload = {
       point_1: event.target.elements[0].value,
       point_2: event.target.elements[1].value,

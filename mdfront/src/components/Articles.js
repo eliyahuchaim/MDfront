@@ -1,5 +1,6 @@
 import React from 'react';
-import { Card, Icon, Image } from 'semantic-ui-react'
+import { Card, Icon, Image } from 'semantic-ui-react';
+import ArticleDetails from './ArticleDetails';
 
 let articlesToSendToBackend = [];
 let data;
@@ -12,7 +13,9 @@ class Article extends React.Component {
     this.state = {
       newArticles: [],
       articlesFromBackEnd: [],
-      featuredArticles: []
+      featuredArticles: [],
+      showSingleArticle: false,
+      singleArticle: []
     }
   }
 
@@ -65,12 +68,27 @@ class Article extends React.Component {
 
   //this should then take us to another component...ArticleDetails, with a prop of articleId.
   renderArticleDetail = (e) => {
+    const ID = parseInt(e.target.getAttribute("value"))
+    const Article = this.state.featuredArticles.find(article => {
+      return article.id === ID
+    })
+    this.setState({
+      showSingleArticle: true,
+      singleArticle: Article
+
+    })
     console.log(e.target.getAttribute('value'))
+  }
+
+  renderAllArticles = () => {
+    this.setState({
+      showSingleArticle: false
+    })
   }
 
   render(){
     let articles;
-    if (this.state.featuredArticles.length) {
+    if (this.state.featuredArticles.length && this.state.showSingleArticle === false) {
       articles = this.state.featuredArticles.map((article, index) =>
         <Card key={index}>
           <Image src={ article.image } />
@@ -95,7 +113,9 @@ class Article extends React.Component {
           </Card.Content>
         </Card>
       );
-    } else {
+    } else if (this.state.showSingleArticle === true) {
+    articles = <ArticleDetails article={this.state.singleArticle} goBack={this.renderAllArticles} />
+  } else {
     articles = <h1>Working</h1>;
   }
     return (

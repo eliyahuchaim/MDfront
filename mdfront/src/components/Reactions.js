@@ -5,13 +5,14 @@ import ReactionDetails from './ReactionDetail'
 const URL = 'http://localhost:3000/api/v1'
 
 class Reaction extends React.Component {
-  constructor(){
-    super()
+
+  constructor(props){
+    super(props)
     this.state = {
       allReactions: [],
       showFrom: true,
       singleReaction: [],
-      article_id: 1,
+      article_id: this.props.article_id,
       showSingleReaction: false
     }
   }
@@ -76,8 +77,7 @@ class Reaction extends React.Component {
       point_2: event.target.elements[1].value,
       point_3: event.target.elements[2].value,
       content: event.target.elements[3].value,
-      article_id: event.target.elements[4].value,
-      user_id: event.target.elements[5].value
+      article_id: this.state.article_id,
     }
     var data = JSON.stringify (payload)
     this.submitReaction(data)
@@ -109,7 +109,6 @@ class Reaction extends React.Component {
   render(){
     return (
       <div>
-        <h1>I am a Reaction</h1>
         {
           (this.state.showFrom) ? <ReactionForm onSubmit={this.handleFormSubmit} />
           : <button onClick={this.showReactionForm} >

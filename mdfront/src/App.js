@@ -5,12 +5,10 @@ import {Redirect} from 'react-router'
 import Navbar from './components/Navbar'
 import Login from './components/Login'
 import LoginAdapter from './adapters/LoginAdapter'
-import Logout from './components/Logout'
 import SignUp from './components/SignUp'
 import Article from './components/Articles'
 import Card from './components/Cards'
 import Post from './components/Posts'
-import Reaction from './components/Reactions'
 import User from './components/Users'
 
 const Everything = (props) => {

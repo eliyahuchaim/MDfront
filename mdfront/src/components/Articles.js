@@ -61,7 +61,7 @@ class Article extends React.Component {
     .then(resp => resp.json())
     .then(resp => this.setState({
       articlesFromBackEnd: [...this.state.articlesFromBackEnd, ...resp]
-    }}))
+    }))
   }
 
   //this should then take us to another component...ArticleDetails, with a prop of articleId.

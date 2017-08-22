@@ -22,7 +22,7 @@ const Navbar = (props) => {
             activeStyle={{
               background: 'darkblue'
             }}
-          >Everything</NavLink>
+          >Home</NavLink>
           <NavLink
             to='/logout'
             exact
@@ -41,7 +41,7 @@ const Navbar = (props) => {
             activeStyle={{
               background: 'darkblue'
             }}
-          >Everything</NavLink>
+          >Home</NavLink>
           <NavLink
             to='/login'
             exact

@@ -27,9 +27,6 @@ const Navbar = (props) => {
             to='/logout'
             exact
             style={link}
-            activeStyle={{
-              background: 'darkblue'
-            }}
           >Logout</NavLink>
         </div>
       )
@@ -57,9 +54,6 @@ const Navbar = (props) => {
             to='/signup'
             exact
             style={link}
-            activeStyle={{
-              background: 'darkblue'
-            }}
           >SignUp</NavLink>
         </div>
       )

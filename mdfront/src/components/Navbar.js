@@ -11,17 +11,12 @@ const link = {
 }
 
 const Navbar = (props) => {
-  const onClickHandler = () => {
-    debugger
-    console.log("clicked")
-  }
 
   const loginStatusNav = () => {
     if (props.loginStatus) {
       return (
         <div className='nav-in'>
           <NavLink
-            onClick={onClickHandler()}
             to='/'
             exact
             style={link}

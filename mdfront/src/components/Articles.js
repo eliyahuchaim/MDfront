@@ -6,20 +6,27 @@ let articlesToSendToBackend = [];
 let data;
 
 class Article extends React.Component {
-
-  constructor(){
-    super()
+  constructor(props){
+    super(props)
 
     this.state = {
       newArticles: [],
       articlesFromBackEnd: [],
       featuredArticles: [],
       showSingleArticle: false,
-      singleArticle: []
+      singleArticle: [],
+      userId: ""
     }
   }
 
-  // go get me some new articles and add them to what we have in articles
+    componentWillReceiveProps(nextProps){
+      if (nextProps.userId !== this.props.userId) {
+        this.setState({
+          userId: nextProps.userId
+        })
+      }
+    }
+
   componentDidMount(){
     fetch('https://newsapi.org/v1/articles?source=bloomberg&sortBy=top&apiKey=698b68b4508443aebc50059616294ee2')
     .then(resp => resp.json())
@@ -51,7 +58,7 @@ class Article extends React.Component {
     let data = JSON.stringify({articles: articles})
     fetch(`http://localhost:3000/api/v1/articles`, {
       headers: {
-      'Authorization': "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.F78CECWXR11i61vE8J6mrE3pSdGjTaRySi7onU00QpQ",
+      'Authorization': `Bearer ${localStorage.token}`,
       'accept': 'application/json',
       'content-Type': 'application/json'
        },
@@ -85,6 +92,7 @@ class Article extends React.Component {
   }
 
   render(){
+    console.log("article", this.state.userId)
     let articles;
     if (this.state.featuredArticles.length && this.state.showSingleArticle === false) {
       articles = this.state.featuredArticles.map((article, index) =>
@@ -120,7 +128,6 @@ class Article extends React.Component {
       <Card.Group>
         {articles}
       </Card.Group>
-
     )
   }
 };

@@ -14,7 +14,6 @@ class Reaction extends React.Component {
       singleReaction: [],
       article_id: this.props.article_id,
       showSingleReaction: false,
-      isOwner: false
     }
   }
 

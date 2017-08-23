@@ -71,7 +71,7 @@ class Reaction extends React.Component {
 
   handleFormSubmit = (event) => {
     event.preventDefault()
-    
+
     let payload = {
       point_1: event.target.elements[0].value,
       point_2: event.target.elements[1].value,
@@ -112,7 +112,7 @@ class Reaction extends React.Component {
         {
           (this.state.showFrom) ? <ReactionForm onSubmit={this.handleFormSubmit} />
           : <button onClick={this.showReactionForm} >
-          Add Add Reaction
+          Add a Reaction
           </button>
         }
         <ReactionDetails Reactions={(this.state.showSingleReaction) ? this.state.singleReaction: this.state.allReactions} showSingleReaction={this.showSingleReaction} showAllReactions={this.showAllReactions} />

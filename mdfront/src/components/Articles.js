@@ -4,22 +4,31 @@ import ArticleDetails from './ArticleDetails';
 
 let articlesToSendToBackend = [];
 let data;
+const URL = 'http://localhost:3000/api/v1'
+
 
 class Article extends React.Component {
-
-  constructor(){
-    super()
+  constructor(props){
+    super(props)
 
     this.state = {
       newArticles: [],
       articlesFromBackEnd: [],
       featuredArticles: [],
       showSingleArticle: false,
-      singleArticle: []
+      singleArticle: [],
+      userId: ""
     }
   }
 
-  // go get me some new articles and add them to what we have in articles
+    componentWillReceiveProps(nextProps){
+      if (nextProps.userId !== this.props.userId) {
+        this.setState({
+          userId: nextProps.userId
+        })
+      }
+    }
+
   componentDidMount(){
     fetch('https://newsapi.org/v1/articles?source=bloomberg&sortBy=top&apiKey=698b68b4508443aebc50059616294ee2')
     .then(resp => resp.json())
@@ -51,7 +60,7 @@ class Article extends React.Component {
     let data = JSON.stringify({articles: articles})
     fetch(`http://localhost:3000/api/v1/articles`, {
       headers: {
-      'Authorization': "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.F78CECWXR11i61vE8J6mrE3pSdGjTaRySi7onU00QpQ",
+      'Authorization': `Bearer ${localStorage.token}`,
       'accept': 'application/json',
       'content-Type': 'application/json'
        },
@@ -70,12 +79,29 @@ class Article extends React.Component {
     const Article = this.state.featuredArticles.find(article => {
       return article.id === ID
     })
+    this.updateArticleViews(ID)
     this.setState({
       showSingleArticle: true,
       singleArticle: Article
-
     })
-    console.log(e.target.getAttribute('value'))
+  }
+
+  updateArticleViews = (ID) => {
+    fetch(`${URL}/articles/${ID}`, {
+      headers: {
+      'accept': 'application/json',
+      'content-Type': 'application/json'
+       },
+      method: 'PATCH'
+    })
+    .then(resp => resp.json())
+    .then( () => {
+      fetch(`http://localhost:3000/api/v1/articles`)
+      .then(resp => resp.json())
+      .then(data => this.setState({
+        featuredArticles: data
+      }))
+    })
   }
 
   renderAllArticles = () => {
@@ -120,7 +146,6 @@ class Article extends React.Component {
       <Card.Group>
         {articles}
       </Card.Group>
-
     )
   }
 };

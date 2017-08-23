@@ -4,6 +4,7 @@ import ArticleDetails from './ArticleDetails';
 
 let articlesToSendToBackend = [];
 let data;
+const URL = 'http://localhost:3000/api/v1'
 
 class Article extends React.Component {
   constructor(props){
@@ -77,12 +78,29 @@ class Article extends React.Component {
     const Article = this.state.featuredArticles.find(article => {
       return article.id === ID
     })
+    this.updateArticleViews(ID)
     this.setState({
       showSingleArticle: true,
       singleArticle: Article
-
     })
-    console.log(e.target.getAttribute('value'))
+  }
+
+  updateArticleViews = (ID) => {
+    fetch(`${URL}/articles/${ID}`, {
+      headers: {
+      'accept': 'application/json',
+      'content-Type': 'application/json'
+       },
+      method: 'PATCH'
+    })
+    .then(resp => resp.json())
+    .then( () => {
+      fetch(`http://localhost:3000/api/v1/articles`)
+      .then(resp => resp.json())
+      .then(data => this.setState({
+        featuredArticles: data
+      }))
+    })
   }
 
   renderAllArticles = () => {

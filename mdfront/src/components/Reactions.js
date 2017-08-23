@@ -13,13 +13,19 @@ class Reaction extends React.Component {
       showFrom: false,
       singleReaction: [],
       article_id: this.props.article_id,
-      showSingleReaction: false
+      showSingleReaction: false,
+      isOwner: false
     }
   }
 
   componentWillMount(){
-    // debugger
-    fetch(`${URL}/article/reactions/${this.state.article_id}`)
+    fetch(`${URL}/article/reactions/${this.state.article_id}`, {
+      headers: {
+      'Authorization': `Bearer ${localStorage.token}`,
+      'accept': 'application/json',
+      'content-Type': 'application/json'
+       }
+    })
     .then(resp => resp.json())
     .then(resp => {this.setState({
       allReactions: resp
@@ -71,7 +77,7 @@ class Reaction extends React.Component {
 
   handleFormSubmit = (event) => {
     event.preventDefault()
-    
+
     let payload = {
       point_1: event.target.elements[0].value,
       point_2: event.target.elements[1].value,
@@ -86,7 +92,7 @@ class Reaction extends React.Component {
   submitReaction = (data) => {
     fetch(`http://localhost:3000/api/v1/reactions`, {
       headers: {
-      'Authorization': "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozfQ.Ml5q0Qa3O-9xjA-aluRwTS86Yt5ilN-SGT-HEK4oDAk",
+      'Authorization': `Bearer ${localStorage.token}`,
       'accept': 'application/json',
       'content-Type': 'application/json'
        },
@@ -107,6 +113,7 @@ class Reaction extends React.Component {
 
 
   render(){
+    console.log(this.state.allReactions)
     return (
       <div>
         {

@@ -120,7 +120,7 @@ class Article extends React.Component {
         </Card>
       );
     } else if (this.state.showSingleArticle === true) {
-    articles = <ArticleDetails article={this.state.singleArticle} goBack={this.renderAllArticles} />
+    articles = <ArticleDetails article={this.state.singleArticle} goBack={this.renderAllArticles} user_id={this.state.userId} />
   } else {
     articles = <h1>Working</h1>;
   }

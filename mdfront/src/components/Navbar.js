@@ -5,7 +5,10 @@ const link = {
   width: '100px',
   padding: '12px',
   margin: '0 6px 6px',
-  background: 'blue',
+  textAlign: 'center',
+  background: '#008CBA',
+  display: 'inline-block',
+  fontSize: '16px',
   textDecoration: 'none',
   color: 'white',
 }
@@ -21,15 +24,23 @@ const Navbar = (props) => {
             exact
             style={link}
             activeStyle={{
-              background: 'darkblue'
+              background: '#2a65b2'
             }}
-          >Everything</NavLink>
+          >Home</NavLink>
+          <NavLink
+            to='/featured'
+            exact
+            style={link}
+            activeStyle={{
+              background: '#2a65b2'
+            }}
+          >Featured</NavLink>
           <NavLink
             to='/logout'
             exact
             style={link}
             activeStyle={{
-              background: 'darkblue'
+              background: '#2a65b2'
             }}
           >Logout</NavLink>
         </div>
@@ -43,15 +54,23 @@ const Navbar = (props) => {
             exact
             style={link}
             activeStyle={{
-              background: 'darkblue'
+              background: '#2a65b2'
             }}
-          >Everything</NavLink>
+          >Home</NavLink>
+          <NavLink
+            to='/featured'
+            exact
+            style={link}
+            activeStyle={{
+              background: '#2a65b2'
+            }}
+          >Featured</NavLink>
           <NavLink
             to='/login'
             exact
             style={link}
             activeStyle={{
-              background: 'darkblue'
+              background: '#2a65b2'
             }}
           >Login</NavLink>
           <NavLink
@@ -59,7 +78,7 @@ const Navbar = (props) => {
             exact
             style={link}
             activeStyle={{
-              background: 'darkblue'
+              background: '#2a65b2'
             }}
           >SignUp</NavLink>
         </div>

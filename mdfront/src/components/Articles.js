@@ -6,7 +6,6 @@ let articlesToSendToBackend = [];
 let data;
 const URL = 'http://localhost:3000/api/v1'
 
-
 class Article extends React.Component {
   constructor(props){
     super(props)
@@ -111,6 +110,7 @@ class Article extends React.Component {
   }
 
   render(){
+    console.log("article", this.state.userId)
     let articles;
     if (this.state.featuredArticles.length && this.state.showSingleArticle === false) {
       articles = this.state.featuredArticles.map((article, index) =>
@@ -138,7 +138,7 @@ class Article extends React.Component {
         </Card>
       );
     } else if (this.state.showSingleArticle === true) {
-    articles = <ArticleDetails article={this.state.singleArticle} goBack={this.renderAllArticles} />
+    articles = <ArticleDetails article={this.state.singleArticle} goBack={this.renderAllArticles} user_id={this.state.userId} />
   } else {
     articles = <h1>Working</h1>;
   }

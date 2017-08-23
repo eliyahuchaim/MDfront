@@ -12,15 +12,40 @@ import Card from './components/Cards'
 import Post from './components/Posts'
 import User from './components/Users'
 
-const Everything = (props) => {
+class Everything extends React.Component{
+  constructor(){
+    super()
+    this.state = {
+      userId: ""
+    }
+  }
+
+  componentWillMount(){
+    fetch("http://localhost:3000/api/v1/userinfo", {
+      headers: {
+        'Authorization': `Bearer ${localStorage.token}`,
+        'accept': 'application/json',
+        'content-type': 'application/json'
+      },
+      method: 'GET',
+    })
+    .then(resp => resp.json())
+    .then(resp => {this.setState({
+      userId: resp.user_id
+    })})
+  }
+
+
+  render(){
   return (
     <div>
-      <Article />
+      <Article userId={this.state.userId}/>
       <Card />
       <Post />
       <User />
     </div>
   );
+}
 }
 
 
@@ -30,6 +55,8 @@ class App extends Component {
     loggedIn : false,
     userId : ""
   }
+
+
 
   componentDidMount(){
     this.setState({
@@ -58,12 +85,14 @@ class App extends Component {
   }
 
   logoutUser = () => {
+    localStorage.removeItem('token')
     this.setState({
       loggedIn : false,
       userId : ""
-    }, () => {localStorage.removeItem('token')})
+    })
     return <Redirect to="/" />
   }
+
 
   render() {
     return (
@@ -75,7 +104,7 @@ class App extends Component {
             </div>
             <br />
             <br />
-            <Route exact path='/' render={Everything} />
+            <Route exact path='/' render={()=>(<Everything userId={this.state.userId} getToken={this.getToken} />)} />
             <Route exact path='/featured' render={Featured}/>
             <Route exact path='/login' render={(props)=>(<Login loginUser={this.loginUser} route={props} />)} />
             <Route exact path='/logout' render={this.logoutUser} />

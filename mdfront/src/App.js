@@ -3,6 +3,7 @@ import './App.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import {Redirect} from 'react-router'
 import Navbar from './components/Navbar'
+import Featured from './components/Featured'
 import Login from './components/Login'
 import LoginAdapter from './adapters/LoginAdapter'
 import SignUp from './components/SignUp'
@@ -72,7 +73,10 @@ class App extends Component {
             <div>
               <Navbar loginStatus={this.state.loggedIn} />
             </div>
+            <br />
+            <br />
             <Route exact path='/' render={Everything} />
+            <Route exact path='/featured' render={Featured}/>
             <Route exact path='/login' render={(props)=>(<Login loginUser={this.loginUser} route={props} />)} />
             <Route exact path='/logout' render={this.logoutUser} />
             <Route exact path='/signup' component={SignUp} />

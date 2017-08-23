@@ -25,7 +25,7 @@ return (
       Go Back
       </button>
     </Card>
-    < Reactions article_id={props.article.id}/>
+    < Reactions article_id={props.article.id} user_id={props.user_id}/>
   </div>
 )
 

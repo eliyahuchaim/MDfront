@@ -26,7 +26,8 @@ const Everything = (props) => {
 class App extends Component {
 
   state = {
-    loggedIn : false
+    loggedIn : false,
+    userId : ""
   }
 
   componentDidMount(){
@@ -44,7 +45,8 @@ class App extends Component {
       if(data.not_jwt) {
         localStorage.setItem('token', data.not_jwt)
         this.setState({
-          loggedIn : localStorage.getItem('token')
+          loggedIn : true,
+          userId : data.user_id
         })
         history.push('/')
       } else {
@@ -56,9 +58,10 @@ class App extends Component {
 
   logoutUser = () => {
     this.setState({
-      loggedIn : false
+      loggedIn : false,
+      userId : ""
     }, () => {localStorage.removeItem('token')})
-    return (<Redirect to="/" />)
+    return <Redirect to="/" />
   }
 
   render() {

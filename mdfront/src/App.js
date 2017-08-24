@@ -33,8 +33,8 @@ class Everything extends React.Component{
     .then(resp => {this.setState({
       userId: resp.user_id
     })})
-  }
 
+  }
 
   render(){
   return (
@@ -53,15 +53,38 @@ class App extends Component {
 
   state = {
     loggedIn : false,
-    userId : ""
+    userId : "",
+    overdue : []
   }
 
 
+  intervalCallback = () => {
+    fetch("http://localhost:3000/api/v1/articles", {
+      headers: {
+        'Authorization': `Bearer ${localStorage.token}`,
+        'accept': 'application/json',
+        'content-type': 'application/json'
+      },
+      method: 'GET',
+    })
+    .then(resp => resp.json())
+    .then(data => {
+      let expired_goods = data.filter((article)=>{
+        let old_date = new Date(article.created_at)
+        let now = new Date()
+        return ((now - old_date) - 120000 ) > 0
+      })
+      this.setState({
+        overdue: expired_goods
+      },console.log(this.state.overdue))
+    })
+  }
 
   componentDidMount(){
     this.setState({
       loggedIn : (localStorage.getItem('token')) ? true : false
     })
+    localStorage.setItem("intervalId", setInterval(()=>{ this.intervalCallback() },3000))
   }
 
   loginUser = (event, history) => {
@@ -93,6 +116,11 @@ class App extends Component {
     return <Redirect to="/" />
   }
 
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   if (this.){
+  //
+  //   }
+  // }
 
   render() {
     return (
@@ -105,7 +133,7 @@ class App extends Component {
             <br />
             <br />
             <Route exact path='/' render={()=>(<Everything userId={this.state.userId} getToken={this.getToken} />)} />
-            <Route exact path='/featured' render={Featured}/>
+            <Route exact path='/featured' render={()=>(<Featured completedArticles={this.state.overdue}/>)}/>
             <Route exact path='/login' render={(props)=>(<Login loginUser={this.loginUser} route={props} />)} />
             <Route exact path='/logout' render={this.logoutUser} />
             <Route exact path='/signup' component={SignUp} />

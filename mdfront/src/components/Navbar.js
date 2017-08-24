@@ -34,7 +34,7 @@ const Navbar = (props) => {
             activeStyle={{
               background: '#2a65b2'
             }}
-          >Featured</NavLink>
+          >Winners</NavLink>
           <NavLink
             to='/logout'
             exact
@@ -64,7 +64,7 @@ const Navbar = (props) => {
             activeStyle={{
               background: '#2a65b2'
             }}
-          >Featured</NavLink>
+          >Winners</NavLink>
           <NavLink
             to='/login'
             exact

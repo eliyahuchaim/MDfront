@@ -70,7 +70,7 @@ class App extends Component {
     .then(resp => resp.json())
     .then(data => {
       let expired_goods = data.filter((article)=>{
-        let old_date = new Date(article.created_at)
+        let old_date = ((article.reactions.length > 0) ? new Date(article.reactions[0].created_at) : new Date())
         let now = new Date()
         return ((now - old_date) - 120000 ) > 0
       })

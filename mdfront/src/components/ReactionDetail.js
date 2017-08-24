@@ -23,7 +23,7 @@ function reactionJSX(reactions, props){
         <Card.Content>
           <Image floated='right' size='mini' src='/assets/images/avatar/large/steve.jpg' />
           <Card.Header>
-            {reaction.user.name}
+            
           </Card.Header>
           <Card.Description>
             {reaction.point_1}
